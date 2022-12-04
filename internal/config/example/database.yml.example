@@ -1,6 +1,6 @@
 database:
   dbo:
-    host: localhost
+    host: 172.21.0.3
     port: 3306
     username: root
     password: 12345678

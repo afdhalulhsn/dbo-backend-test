@@ -7,10 +7,11 @@ services:
       - "8830:8830"
     #restart: on-failure
     depends_on:
-      - db
+      - mysql
     networks:
-      - fullstack
-  db:
+      backendme:
+        ipv4_address: 172.21.0.5
+  mysql:
     container_name: docker-mysql
     image: mysql:8.0
     cap_add:
@@ -20,19 +21,25 @@ services:
       - MYSQL_DATABASE=backend_dbo_testing
       - MYSQL_ROOT_PASSWORD=12345678
     ports:
-      - '3306:3306'
+      - 3306:3306
     volumes:
-      - database_mysql:/var/lib/mysql
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - fullstack
+      backendme:
+        ipv4_address: 172.21.0.3
+
+
 
 
 volumes:
-  api:
-#  database_postgres:                  # Uncomment this when using postgres.
-  database_mysql:                   # Uncomment this when using mysql.
-
+  db:
+    driver: local
 
 networks:
-  fullstack:
+  backendme:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        -  subnet: 172.21.0.0/16

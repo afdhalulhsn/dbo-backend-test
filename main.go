@@ -74,5 +74,5 @@ func main() {
 	router.ProductRouter(producAdmin, pdSvc)
 	router.CustomerAdmin(customerAdmin, custSvc)
 
-	route.Run("localhost:8830")
+	route.Run(":8830")
 }
