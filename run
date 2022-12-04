@@ -1,0 +1,2 @@
+docker build -f Dockerfile -t docker-dbo-test .
+docker-compose up --build -d
