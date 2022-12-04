@@ -1,7 +1,7 @@
 database:
   dbo:
     host: localhost
-    port: 4306
+    port: 3306
     username: root
     password: 12345678
     dbname: backend_dbo_testing

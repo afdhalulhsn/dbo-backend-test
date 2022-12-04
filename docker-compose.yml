@@ -5,15 +5,13 @@ services:
     image: docker-dbo-test
     ports:
       - "8830:8830"
+    #restart: on-failure
     depends_on:
       - db
     networks:
-      backendme:
-        ipv4_address: 172.0.0.1
-    command: ifconfig
-#    restart: unless-stopped
+      - fullstack
   db:
-    container_name: docker-mysql-2
+    container_name: docker-mysql
     image: mysql:8.0
     cap_add:
       - SYS_NICE
@@ -22,22 +20,19 @@ services:
       - MYSQL_DATABASE=backend_dbo_testing
       - MYSQL_ROOT_PASSWORD=12345678
     ports:
-      - '4306:4306'
+      - '3306:3306'
     volumes:
-      - db:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - database_mysql:/var/lib/mysql
     networks:
-      backendme:
-        ipv4_address: 172.0.0.1
+      - fullstack
+
 
 volumes:
-  db:
-    driver: local
+  api:
+#  database_postgres:                  # Uncomment this when using postgres.
+  database_mysql:                   # Uncomment this when using mysql.
+
 
 networks:
-  backendme:
+  fullstack:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-        -  subnet: 172.21.0.0/16
