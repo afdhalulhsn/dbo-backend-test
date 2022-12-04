@@ -1,4 +1,7 @@
 FROM golang:1.18-alpine3.16
+RUN apk add alpine-sdk
+
+
 
 WORKDIR /app
 
