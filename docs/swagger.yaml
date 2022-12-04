@@ -1,0 +1,609 @@
+basePath: /
+definitions:
+  entity.CustomerData:
+    properties:
+      dateOfBirth:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      noHp:
+        type: string
+      noId:
+        type: string
+      status:
+        type: integer
+    type: object
+  entity.DataOrder:
+    properties:
+      customerData:
+        $ref: '#/definitions/entity.CustomerData'
+      id:
+        type: string
+      idCustomer:
+        type: string
+      idProduct:
+        type: string
+      orderDate:
+        type: string
+      productData:
+        $ref: '#/definitions/entity.ProductData'
+      qty:
+        type: integer
+    type: object
+  entity.LoginHistory:
+    properties:
+      expiredTime:
+        type: string
+      id:
+        type: string
+      idUser:
+        type: string
+      loginTime:
+        type: string
+      status:
+        type: string
+      userData:
+        $ref: '#/definitions/entity.UserData'
+    type: object
+  entity.ProductData:
+    properties:
+      harga:
+        type: integer
+      id:
+        type: string
+      kodeProduk:
+        type: string
+      namaProduck:
+        type: string
+    type: object
+  entity.UserData:
+    properties:
+      customerData:
+        $ref: '#/definitions/entity.CustomerData'
+      id:
+        type: string
+      idCustomer:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      status:
+        type: integer
+      token:
+        type: string
+      userName:
+        type: string
+    type: object
+  model.AddProduct:
+    properties:
+      harga:
+        type: integer
+      kodeProduk:
+        type: string
+      namaProduck:
+        type: string
+    type: object
+  model.CustomerUpdateModel:
+    properties:
+      email:
+        type: string
+      gender:
+        type: string
+      id_customer:
+        type: string
+      nama:
+        type: string
+      no_hp:
+        type: string
+      no_id:
+        type: string
+      ttl:
+        type: string
+    type: object
+  model.DaftarModel:
+    properties:
+      email:
+        type: string
+      gender:
+        type: string
+      nama:
+        type: string
+      no_hp:
+        type: string
+      no_id:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      tgl_lahir:
+        type: string
+      username:
+        type: string
+    type: object
+  model.InsertOrder:
+    properties:
+      id_customer:
+        type: string
+      id_product:
+        type: string
+      qty:
+        type: integer
+    type: object
+  model.LoginModel:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.ResponseData:
+    properties:
+      data: {}
+      error_code:
+        type: string
+      is_error:
+        type: boolean
+      message:
+        type: string
+    type: object
+  model.UpdateOrder:
+    properties:
+      id_order:
+        type: string
+      qty:
+        type: integer
+    type: object
+host: localhost:8830
+info:
+  contact:
+    email: afdhalulhsn74@gmail.com
+    name: Afdhalul Ihsan
+  description: This is Swagger Documentation API For BackEnd DBO Test.
+  license:
+    name: Apache 2.0
+  title: DBO BackEnd Test API
+  version: "1.0"
+paths:
+  /admin/customer-admin:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.CustomerData'
+                  type: array
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetAllCustomer
+  /admin/customer-admin/detail/:id:
+    delete:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseData'
+      summary: Show the status of server.
+      tags:
+      - DeleteCustomer
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.CustomerData'
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetDetailCustomer
+  /admin/customer-admin/paging:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.CustomerData'
+                  type: array
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetAllCustomerPagination
+  /admin/customer-admin/search:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: key
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.CustomerData'
+                  type: array
+              type: object
+      summary: Show the status of server.
+      tags:
+      - SearchAllCustomer
+  /admin/customer-admin/update:
+    put:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: CustomerUpdateModel
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.CustomerUpdateModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseData'
+      summary: Show the status of server.
+      tags:
+      - UpdateCustomer
+  /admin/produk:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.ProductData'
+                  type: array
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetAllProduct
+  /admin/produk/add:
+    post:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: AddProduct
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.AddProduct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseData'
+      summary: Show the status of server.
+      tags:
+      - AddProduct
+  /api/v1/order:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.DataOrder'
+                  type: array
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetAllOrder
+  /api/v1/order/add:
+    post:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: InsertOrder
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.InsertOrder'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseData'
+      summary: Show the status of server.
+      tags:
+      - InsertOrder
+  /api/v1/order/detail/:id:
+    delete:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseData'
+      summary: Show the status of server.
+      tags:
+      - DeleteOrder
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.DataOrder'
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetDetailOrder
+  /api/v1/order/paging:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.DataOrder'
+                  type: array
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetAllOrderPagination
+  /api/v1/order/search:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: key
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.DataOrder'
+                  type: array
+              type: object
+      summary: Show the status of server.
+      tags:
+      - SearchAllOrder
+  /api/v1/order/update:
+    put:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: UpdateOrder
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateOrder'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseData'
+      summary: Show the status of server.
+      tags:
+      - UpdateOrder
+  /login:
+    post:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: LoginModel
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.UserData'
+              type: object
+      summary: Show the status of server.
+      tags:
+      - Login
+  /login-data:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: LoginModel
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.LoginHistory'
+              type: object
+      summary: Show the status of server.
+      tags:
+      - GetLoginData
+  /pendaftaran:
+    post:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      parameters:
+      - description: DaftarModel
+        in: body
+        name: Payload
+        required: true
+        schema:
+          $ref: '#/definitions/model.DaftarModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseData'
+      summary: Show the status of server.
+      tags:
+      - Pendaftaran
+schemes:
+- http
+swagger: "2.0"
